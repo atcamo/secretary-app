@@ -1,0 +1,34 @@
+:root {
+    --scheme: light dark;
+    color-scheme: var(--scheme);
+}
+
+
+
+.container {
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.input-group {
+    margin-bottom: 10px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+button {
+    margin-top: 10px;
+}
+
+ul {
+    padding: 0;
+}
+
+li {
+    list-style-type: none;
+    margin-bottom: 5px;
+}
