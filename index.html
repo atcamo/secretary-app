@@ -5,18 +5,43 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'"/>
+    <!-- Content Security Policy -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'">
 
-    <meta http-equiv="X-Content-Security-Policy" content="default-src 'self'; script-src 'self'"/>
-    
     <link rel="stylesheet" type="text/css" href="./style.css">
     <title>Secretary app</title>
-    <script defer src="./renderer.js"></script>
-    </head>
-    <body>
-        <h1> click</h1>
-        <button>Clica aquí</button>
-        <span id="count">0</span>
-    </body>
+</head>
+<body>
+    <h1>Registro de Llamadas</h1>
+
+    <div class="formulario">
+        <label for="nombre">Nombre del llamante:</label>
+        <input type="text" id="nombre" placeholder="Nombre">
+
+        <label for="numero">Número de contacto:</label>
+        <input type="number" id="numero" placeholder="Número">
+
+        <label for="motivo">Motivo de la llamada:</label>
+        <select id="motivo">
+            <option value="Consulta">Consulta</option>
+            <option value="Reclamo">Reclamo</option>
+            <option value="Solicitud">Solicitud</option>
+        </select>
+
+        <label for="derivado">Derivado a:</label>
+        <input type="text" id="derivado" placeholder="Derivado a">
+
+        <label for="anexo">Anexo:</label>
+        <input type="text" id="anexo" placeholder="Anexo">
+
+        <button onclick="guardarLlamada()">Guardar</button>
+    </div>
+
+    <div class="llamadas">
+        <h2>Llamadas guardadas</h2>
+        <ul id="lista-llamadas"></ul>
+    </div>
+
+    <script src="./renderer.js"></script>
+</body>
 </html>
