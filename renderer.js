@@ -47,24 +47,25 @@ function obtenerHoraActual() {
     return horaAnotacion;
 }
 
-// Función para mostrar las llamadas guardadas en la lista
 function mostrarLlamadas() {
-    const listaLlamadas = document.getElementById('lista-llamadas');
-    listaLlamadas.innerHTML = ''; // Limpiar la lista antes de actualizarla
+    const tablaLlamadas = document.getElementById('tabla-llamadas');
+    tablaLlamadas.innerHTML = ''; // Limpiar la tabla antes de actualizarla
 
-    llamadas.forEach((llamada) => {
-        const itemLista = document.createElement('li');
-        itemLista.innerHTML = `
-            <strong>Nombre:</strong> ${llamada.nombre} -
-            <strong>Número:</strong> ${llamada.numero} -
-            <strong>Motivo:</strong> ${llamada.motivo} -
-            <strong>Derivado a:</strong> ${llamada.derivado} -
-            <strong>Anexo:</strong> ${llamada.anexo} -
-            <strong>Hora de anotación:</strong> ${llamada.horaAnotacion}
+    llamadas.forEach((llamada, indice) => {
+        const fila = document.createElement('tr');
+        fila.innerHTML = `
+            <td>${indice + 1}</td>
+            <td>${llamada.nombre}</td>
+            <td>${llamada.numero}</td>
+            <td>${llamada.motivo}</td>
+            <td>${llamada.derivado}</td>
+            <td>${llamada.anexo}</td>
+            <td>${llamada.horaAnotacion}</td>
         `;
-        listaLlamadas.appendChild(itemLista);
+        tablaLlamadas.appendChild(fila);
     });
 }
+
 
 // Verificar y mostrar el botón si es el momento adecuado
 function verificarMostrarBoton() {
@@ -169,4 +170,68 @@ function formatoMinutosSegundos(segundos) {
     const minutos = Math.floor(segundos / 60);
     const segundosRestantes = segundos % 60;
     return `${minutos.toString().padStart(2, '0')}:${segundosRestantes.toString().padStart(2, '0')}`;
+}
+
+function procesarContenidoCSV(contenido) {
+    const lineas = contenido.split('\n');
+    const llamadasCargadas = [];
+
+    for (let i = 0; i < lineas.length; i++) {
+        const campos = lineas[i].split(',');
+        
+        if (campos.length === 6) {
+        const nombre = campos[0];
+        const numero = campos[1];
+        const motivo = campos[2];
+        const derivado = campos[3];
+        const anexo = campos[4];
+        const horaAnotacion = campos[5];
+
+        const llamada = {
+            nombre: nombre,
+            numero: numero,
+            motivo: motivo,
+            derivado: derivado,
+            anexo: anexo,
+            horaAnotacion: horaAnotacion
+        };
+
+        llamadasCargadas.push(llamada);
+        }
+    }
+
+    // Agregar las llamadas cargadas al arreglo existente
+    llamadas = llamadas.concat(llamadasCargadas);
+
+    // Mostrar las llamadas actualizadas
+    mostrarLlamadas();
+}
+
+function procesarArchivosCSV() {
+    const inputArchivos = document.getElementById('cargar-csv');
+    const archivos = inputArchivos.files;
+
+    const leerArchivo = (archivo) => {
+        const lector = new FileReader();
+
+        lector.onload = (evento) => {
+            const contenido = evento.target.result;
+            procesarContenidoCSV(contenido);
+        };
+
+        lector.readAsText(archivo);
+    };
+
+    for (let i = 0; i < archivos.length; i++) {
+        leerArchivo(archivos[i]);
+    }
+
+    // Limpiar el valor del campo de archivos para poder cargar los mismos archivos nuevamente
+    inputArchivos.value = '';
+
+    // Mostrar la tabla de llamadas después de cargar los archivos
+    const encabezadoLlamadas = document.getElementById('encabezado-llamadas');
+    encabezadoLlamadas.style.display = 'block';
+    const tablaLlamadas = document.getElementById('tabla-llamadas');
+    tablaLlamadas.style.display = 'block';
 }

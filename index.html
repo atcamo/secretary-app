@@ -44,6 +44,28 @@
         <ul id="lista-llamadas"></ul>
     </div>
 
+    <label for="cargar-csv">Cargar archivo(s) CSV:</label>
+    <input type="file" id="cargar-csv" accept=".csv" multiple>
+    <button onclick="procesarArchivosCSV()">Cargar</button>
+
+    <div id="encabezado-llamadas"class="llamadas">
+        <h2>Llamadas guardadas</h2>
+        <table id="tabla-llamadas">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Nombre</th>
+                    <th>Número</th>
+                    <th>Motivo</th>
+                    <th>Derivado a</th>
+                    <th>Anexo</th>
+                    <th>Hora de anotación</th>
+                </tr>
+            </thead>
+            <tbody id="lista-llamadas"></tbody>
+            </table>
+        </div>
+
     <script src="./renderer.js"></script>
 </body>
 </html>
