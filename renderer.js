@@ -48,7 +48,7 @@ function obtenerHoraActual() {
 }
 
 function mostrarLlamadas() {
-    const tablaLlamadas = document.getElementById('tabla-llamadas');
+    const tablaLlamadas = document.getElementById('lista-llamadas');
     tablaLlamadas.innerHTML = ''; // Limpiar la tabla antes de actualizarla
 
     llamadas.forEach((llamada, indice) => {
@@ -204,7 +204,7 @@ function procesarContenidoCSV(contenido) {
     llamadas = llamadas.concat(llamadasCargadas);
 
     // Mostrar las llamadas actualizadas
-    mostrarLlamadas();
+    mostrarLlamadasCsv();
 }
 
 function procesarArchivosCSV() {
@@ -234,4 +234,23 @@ function procesarArchivosCSV() {
     encabezadoLlamadas.style.display = 'block';
     const tablaLlamadas = document.getElementById('tabla-llamadas');
     tablaLlamadas.style.display = 'block';
+}
+
+function mostrarLlamadasCsv() {
+    const tablaLlamadas = document.getElementById('tabla-llamadas');
+    tablaLlamadas.innerHTML = ''; // Limpiar la tabla antes de actualizarla
+
+    llamadas.forEach((llamada, indice) => {
+        const fila = document.createElement('tr');
+        fila.innerHTML = `
+            <td>${indice + 1}</td>
+            <td>${llamada.nombre}</td>
+            <td>${llamada.numero}</td>
+            <td>${llamada.motivo}</td>
+            <td>${llamada.derivado}</td>
+            <td>${llamada.anexo}</td>
+            <td>${llamada.horaAnotacion}</td>
+        `;
+        tablaLlamadas.appendChild(fila);
+    });
 }
